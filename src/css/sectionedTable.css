@@ -1,0 +1,139 @@
+/*
+table styles
+*/
+.tableContainer{
+    display:flex;
+    flex-direction: column;
+}
+.headerContainer{
+    display:flex;
+    width:100%;
+    font-weight: bold;
+}
+.headerBuffer{
+    flex: 1 1;
+    min-width: 4.5em;
+    border:1px solid black;
+}
+
+.headerRows .cell{
+  border:1px solid black;
+  /*min-width:102px;*/
+  flex-wrap: nowrap;
+}
+
+/*
+section styles
+*/
+.sectionContainer{
+    display:flex;
+}
+
+.sectionRows, .headerRows{
+    display:flex;
+    flex:20;
+    flex-direction: column;
+
+}
+
+.sectionName{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+.sectionContainer:nth-child(odd), .sectionContainer:nth-child(odd) .rowContainer:nth-child(odd){
+    background-color: #DFF0D8;
+}
+
+.sectionContainer:nth-child(odd) .rowContainer:nth-child(even){
+    background-color:white;
+}
+
+ .sectionContainer:nth-child(even), .sectionContainer:nth-child(even) .rowContainer:nth-child(odd){
+    background-color: #D9EDF7;
+}
+.sectionContainer:nth-child(even) .rowContainer:nth-child(even){
+    background-color:white;
+}
+
+.sectionContainer:nth-child(odd) span.fa{
+  color:#449D44;
+}
+
+.sectionContainer:nth-child(even) span.fa{
+  color: #5BC0DE;
+}
+/*.sectionContainer .sectionRows{
+    flex: 20 0 auto
+}*/
+.sectionContainer .sectionName{
+    flex: 1 1;
+    min-width: 4.5em;
+    border-left:1px solid black;
+    border-right:1px solid black;
+}
+
+
+/*
+hide the section rows
+*/
+.sectionContainer.hidden .sectionRows .rowContainer{
+    display:none;
+}
+
+.sectionContainer.hidden .sectionRows .rowContainer:first-child{
+    display:flex;
+    box-shadow: inset 0px -11px 7px rgba(0,0,0,0.25)
+}
+.sectionContainer.hidden .sectionName{
+    box-shadow: inset 0px -11px 7px rgba(0,0,0,0.25)
+}
+
+
+
+
+/*
+row styles
+*/
+.rowContainer{
+    display:flex;
+    /*width:100%*/
+    /*border-bottom: 1px solid black;*/
+    flex:20 0 auto;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+
+
+/*
+cell style
+*/
+.cell{
+    flex: 1;
+    word-wrap: break-word;
+    min-width: 0;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    padding:6px;
+}
+
+
+.toolTipContainer .toolTipText{
+  visibility: hidden;
+  width:240px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.toolTipContainer:hover .toolTipText {
+    visibility: visible;
+}
