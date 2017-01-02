@@ -15,3 +15,9 @@ and
 "npm start"
 
 This will start up a webserver and should automatically load the page.
+
+To have this run in production you need to first compile the es6 code to javascript
+
+to do this you need to run "npm run build" this will minimize and optimize the code
+for production. The compiled code will live in the "build" folder, which can easily
+be hosted.
