@@ -1,16 +1,19 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import Cell ,{CellProp} from './Cell';
 
-const Row = ({items})=>{
-  return (
-    <div className="rowContainer">
-        {items.map((item, index)=>
-          <Cell key={index}
-          value={item.value}
-          hover={item.hover}/>
-      )}
-    </div>
-  )
+class Row extends Component{
+  render () {
+    let items = this.props.items
+    return (
+      <div className="rowContainer">
+          {items.map((item, index)=>
+            <Cell key={index}
+            value={item.value}
+            hover={item.hover}/>
+        )}
+      </div>
+    )
+  }
 }
 
 

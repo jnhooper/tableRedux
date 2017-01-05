@@ -1,7 +1,7 @@
 import {ajax} from 'jquery';
 
-ajax('https://raw.githubusercontent.com/openkim/openkim-properties/master/properties/structure-cubic-crystal-npt/2014-04-15-staff%40noreply.openkim.org/structure-cubic-crystal-npt.edn#')
-.then(data=>{console.log(data)});
+// ajax('https://raw.githubusercontent.com/openkim/openkim-properties/master/properties/structure-cubic-crystal-npt/2014-04-15-staff%40noreply.openkim.org/structure-cubic-crystal-npt.edn#')
+// .then(data=>{console.log(data)});
 const columns=[
 {
   name:'Model',
