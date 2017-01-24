@@ -8,9 +8,7 @@ import '../css/sectionedTable.css'
 **/
 class SectionedTable extends Component{
   render(){
-    let sections = this.props.sections;
-    let data = this.props.data;
-    let columns = this.props.columns;
+    let {sections, data, columns} = this.props;
     return (
       <div className="tableContainer">
         <div className="headerContainer">
@@ -19,15 +17,22 @@ class SectionedTable extends Component{
             <Row className="headers" items={columns}/>
           </div>
         </div>
+        <div className="fakeHeaderContainer">
+          <div className="headerBuffer"></div>
+          <div className="headerRows">
+            <Row className="headers" items={columns}/>
+          </div>
+        </div>
+        <div className="sections">
         {sections.map((section, index)=>
            <Section key={index} rows={section.rows}
             name={section.name}/>
         )}
+        </div>
       </div>
     );
   }
 };
-
 
 SectionedTable.propTypes={
     sections:PropTypes.arrayOf(SectionProp).isRequired,

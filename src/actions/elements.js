@@ -1,14 +1,14 @@
 export const ADD_ELEMENT = 'ADD_ELEMENT';
-export const SELECT_ELEMENT = 'SELECT_ELEMENT';
+export const SET_ELEMENT = 'SET_ELEMENT';
 
-export function addElement (element){  
+export function addElement (element){
   return {
     type:ADD_ELEMENT,
     element};
 }
 
-export function changeElement(element){
+export function setElement(element){
   return {
-  type:SELECT_ELEMENT,
+  type:SET_ELEMENT,
   element};
 }

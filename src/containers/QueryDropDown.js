@@ -76,7 +76,6 @@ let QueryDropDown = ({options, elements=[], dispatch})=>{
                 }
               }
             }
-            console.log("hey")
             dispatch(addElement({id:val, data}));
             dispatch(changeElement({id:val, data}));
           })

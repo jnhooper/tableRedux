@@ -1,12 +1,15 @@
 import {combineReducers} from 'redux';
 import elements from './elements';
-import selectElement from './selectElement';
+import setElement from './setElement';
 import setFilter from './sectionFilter';
+import model from './model';
+import columns from './columns';
 
 const tableApp = combineReducers({
-  elements,
-  selectedElement:selectElement,
-  sectionFilter:setFilter
+  element:setElement,
+  sectionFilter:setFilter,
+  model,
+  columns
 })
 
 export default tableApp;

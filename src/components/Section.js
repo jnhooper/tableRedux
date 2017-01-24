@@ -9,22 +9,18 @@ let clickHandle = (func, self)=>{
   }
 }
 
-let compressed = false;
 let getIcon=(cmprs=false)=>{
   let result
   cmprs? result="expand": result="compress";
   return result;
 }
 
-let toggleCompressed=()=>{
-  compressed = !compressed;
-}
 
 const Section = React.createClass({
 
   getInitialState:function(){
         return {
-          collapsed:false,
+          collapsed:true,
           nameClick:()=>{return}
         };
   },
@@ -53,18 +49,22 @@ render: function() {
       let name = this.props.name;
       let rows = this.props.rows;
       let self = this;
+      let highlight = this.props.highlight;
     return (
       <div className={classes}>
           <div className="sectionName"
           onClick={this.clickHandle(nameClick)}>
               {name}
-              <br/>              
-              <FontAwesome className='expand'
-              name={collapsed? 'expand':'compress'}/>
+              <br/>
+              <div className='sectionButton'>
+                <FontAwesome className='expand'
+                name={collapsed? 'expand':'compress'}/>
+                {collapsed?'Expand':'Collapse'}
+              </div>
           </div>
           <div className="sectionRows">
               {rows.map((row, index)=>
-                <Row key={index} items={row}/>
+                <Row key={index} items={row} />
               )}
           </div>
       </div>
@@ -91,6 +91,7 @@ render: function() {
 //     </div>
 //   )
 // }
+
 
 Section.propTypes={
   rows:PropTypes.arrayOf(RowProp).isRequired,

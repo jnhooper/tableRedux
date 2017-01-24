@@ -1,0 +1,12 @@
+1/6
+takes species and Model
+highlight model a certain color. model will be in several different sections.
+subsections will be collapsed. it should say click to expand across the whole thing.
+for time purposes we can just have the first col say click to expand. then the rest blank
+1/20
+model shows up at the top of the list. still highlighted
+implement question mark description query
+change color of highlight. lighten it to match. pastel
+button needs to match the other buttons on the kim package
+try having the headers fixed
+check on javascript conversion library.

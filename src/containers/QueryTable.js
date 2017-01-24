@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import SectionedTable from '../components/SectionedTable';
+import {getURLParams, getValue, getQuery, zip} from '../util';
+import {addElement, setElement} from '../actions/elements';
+import {selectModel} from '../actions/models';
+import {queries} from '../setup';
+import {kimRequests} from '../queryCreator';
+import {setColumns} from '../actions/columns';
+
+const species = getURLParams('species');
+
 // Section:{name, nameClick(), rows:[Rows]}
 // Row:items:[Cells]
 // Cell:{value,filter}
@@ -9,23 +19,6 @@ import SectionedTable from '../components/SectionedTable';
 special thanks to
 http://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
 */
-let getValue=(o, s)=> {
-    if(s==undefined){
-        return "";
-    }
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    let a = s.split('.');
-    for (let i = 0, n = a.length; i < n; ++i) {
-        let k = a[i];
-        if (k in o) {
-            o = o[k];
-        } else {
-            return;
-        }
-    }
-    return o;
-};
 
 /**
 * formats the cols into the propper format for the
@@ -62,14 +55,29 @@ let formatRow=(datum, cols)=>{
   return row
 }
 
-let formatData =(data=[], columns=[])=>{
+//format data for the table
+let formatData =(data=[], columns=[], model='')=>{
   let sectionHash={}
   let sections=[]
 
   for (let datum of data) {
     let name=datum['short-name']['source-value'][0];
-    let row = formatRow(datum, columns);
-    sectionHash[name]?sectionHash[name].push(row): sectionHash[name]=[row];
+
+    let highlight = (getValue(datum, 'meta.subject.kimcode')===model)
+
+    let row = {
+      data:formatRow(datum, columns),
+      props:{highlight:highlight}
+    };
+
+    if(sectionHash[name]){
+      if(highlight){
+        sectionHash[name]=[row, ...sectionHash[name]]
+      }else{
+        sectionHash[name].push(row)
+      }
+    }else{
+       sectionHash[name]=[row];}
   }
 
   for(let section in sectionHash){
@@ -82,17 +90,65 @@ let formatData =(data=[], columns=[])=>{
   return sections;
 }
 
-const mapStateToProps =({selectedElement}, {columns})=>{
 
-  let data = selectedElement.data;
-  data = formatData(data, columns);
-  let headers = formatHeader(columns);
+let dataMerge = (first, second, key)=>{
+  //not sure how when returns requests, can probably take this out but just to
+  //be safe
+  if(first.length<second.length){
+    let temp = first;
+    first = second;
+    second = temp;
+  }
+  for(let datum of first){
+    for(let dat of second){
+      if(getValue(dat, key)===getValue(datum, key)){
+        //TODO fix this so it doesnt mutate data
+        datum.c11 =dat.c11;
+        datum.c12=dat.c12;
+        datum.c44=dat.c44
+      }
+    }
+  }
+  return first;
+}
 
+const mapStateToProps =({element={data:[]}, model='', columns=[]},)=>{
+  let data = element.data;
+  data = formatData(data, columns, model);
   return{
     sections:data,
-    columns:headers
+    columns:columns
   }
 };
 
-const QueryTable = connect(mapStateToProps)(SectionedTable)
-export default QueryTable;
+const mapDispatchToProps=(dispatch)=>{
+  return bindActionCreators({selectModel, setElement}, dispatch);
+}
+
+class QueryTable extends Component{
+  componentDidMount(){
+    let {selectModel, setElement, columns} = this.props;
+
+    selectModel(getURLParams("model"));
+    kimRequests(
+    //need to plug the species name into the queries
+      queries.map(function(d){return d(species)}),
+      (data)=>{
+        setElement({
+          name:species,
+          data:dataMerge(...data, 'meta.subject.kimcode')
+          }
+        )
+      }
+    );
+  }
+
+  render(){
+    let{sections, columns} = this.props;
+
+    return (<SectionedTable sections={sections} columns={formatHeader(columns)}/>)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QueryTable)
+// export default QueryTable;

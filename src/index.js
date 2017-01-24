@@ -6,6 +6,7 @@ import App from './App';
 import tableApp from './reducers/index';
 import './index.css';
 
+
 let store = createStore(tableApp,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 render(
   <Provider store={store}>

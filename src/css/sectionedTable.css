@@ -1,14 +1,41 @@
 /*
+styles for the fixed header
+*/
+/*html, body, #root, .App, .tableContainer{
+  height:100%;
+}*/
+/*.tableContainer{
+  overflow: hidden;
+}*/
+
+.headerContainer, .fakeHeaderContainer{
+  flex: 0 0 auto;
+}
+
+/*.sections{
+  position: relative;
+  overflow-y:auto;
+}*/
+
+/*
 table styles
 */
 .tableContainer{
     display:flex;
     flex-direction: column;
 }
-.headerContainer{
+.headerContainer, .fakeHeaderContainer{
     display:flex;
     width:100%;
     font-weight: bold;
+    /*height:45px;*/
+    background-color: white;
+    /*position:fixed;*/
+}
+
+.headerContainer{
+  position:fixed;
+  z-index: 3;
 }
 .headerBuffer{
     flex: 1 1;
@@ -41,7 +68,9 @@ section styles
     text-decoration: underline;
 }
 
-
+.sections{
+  position:relative;
+}
 
 .sectionContainer:nth-child(odd), .sectionContainer:nth-child(odd) .rowContainer:nth-child(odd){
     background-color: #DFF0D8;
@@ -77,6 +106,18 @@ section styles
 
 
 /*
+section button
+*/
+.sectionContainer .sectionName > .sectionButton{
+  background-color: white;
+  border-radius: 4px;
+  font-weight: normal;
+  text-decoration: none;
+  font-size:small;
+  border:1px solid black;
+}
+
+/*
 hide the section rows
 */
 .sectionContainer.hidden .sectionRows .rowContainer{
@@ -97,6 +138,9 @@ hide the section rows
 /*
 row styles
 */
+.sectionContainer .rowContainer{
+  word-break: break-all;
+}
 .rowContainer{
     display:flex;
     /*width:100%*/
@@ -105,6 +149,11 @@ row styles
     flex-direction:row;
     flex-wrap:wrap;
 }
+
+.tableContainer .sections > .sectionContainer:not(.hidden) .sectionRows .rowContainer.rowHighlight{
+  background-color: #fdfd96;
+}
+
 
 
 /*
@@ -132,6 +181,8 @@ cell style
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
+    margin-left: -150px;
+    margin-top:20px;
 }
 
 .toolTipContainer:hover .toolTipText {
