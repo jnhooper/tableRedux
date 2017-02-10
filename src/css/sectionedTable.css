@@ -188,3 +188,7 @@ cell style
 .toolTipContainer:hover .toolTipText {
     visibility: visible;
 }
+
+.customTooltip{
+  max-width:240px;
+}

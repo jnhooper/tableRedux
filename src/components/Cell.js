@@ -1,7 +1,12 @@
 import React, {PropTypes, Component}  from 'react';
 import FontAwesome from 'react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 class Cell extends Component{
+  componentDidMount () {
+    ReactTooltip.rebuild();
+  }
+
   render () {
     let hover = this.props.hover;
     let value = this.props.value;
@@ -9,11 +14,11 @@ class Cell extends Component{
     let className, cell;
     hover?className="toolTipText":className="hidden"
     if(hover){
-      cell =<div>{filter(value)}
-        <span className="toolTipContainer">
-          <i className="fa fa-question-circle"></i>
-          <span className="toolTipText">{hover}</span>
-        </span>
+      cell = <div>
+        {filter(value)}
+        <i data-tip={hover} data-for={value} className="fa fa-question-circle"></i>
+        <ReactTooltip className="customTooltip"
+          place="bottom" id={value} type="info" effect="solid"/>
         </div>
     }else{
       cell= <div>
